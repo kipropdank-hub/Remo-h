@@ -1,0 +1,26 @@
+# Python
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Django local data and collected static files
+backend/db.sqlite3
+backend/media/
+backend/staticfiles/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Editor / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

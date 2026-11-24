@@ -1,0 +1,12 @@
+# Python dependencies for the Django backend (local development and Render).
+Django==6.1.3
+djangorestframework==3.18.3
+django-cors-headers==4.9.0
+pillow==13.0.0
+
+# Production web server + static file serving on Render
+gunicorn>=22,<24
+whitenoise>=6.8,<7
+
+# Required only when DATABASE_URL points to Render Postgres
+psycopg2-binary>=2.9,<3
