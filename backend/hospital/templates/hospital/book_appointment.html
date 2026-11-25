@@ -1,0 +1,68 @@
+{% extends 'hospital/base.html' %}
+{% block title %}Book an Appointment — Remo H Hospital{% endblock %}
+{% block description %}Schedule a clinical consultation with a Remo H Hospital specialist online.{% endblock %}
+
+{% block content %}
+{% include 'hospital/page_header.html' with eyebrow='Online Outpatient Scheduling' title='Schedule Your Clinical Consultation' subtitle='Reserve an appointment with our specialist physicians in three simple steps with immediate slot confirmation.' %}
+
+<section class="section-tight">
+  <div class="container" style="max-width:960px">
+    <form method="post" class="form-card" novalidate>
+      {% csrf_token %}
+
+      <div class="wizard-steps">
+        <div class="wizard-step active"><span>1</span> Doctor &amp; Dept</div>
+        <div class="wizard-step active"><span>2</span> Date &amp; Slot</div>
+        <div class="wizard-step active"><span>3</span> Patient Info</div>
+      </div>
+
+      {% if form.non_field_errors %}
+      <div class="form-error-banner">
+        <svg class="icon"><use href="#i-x"></use></svg>
+        <div>{% for error in form.non_field_errors %}<div>{{ error }}</div>{% endfor %}</div>
+      </div>
+      {% endif %}
+
+      <fieldset style="border:0;padding:0;margin:0 0 2rem">
+        <legend style="font-size:1.25rem;font-weight:800;color:var(--slate-900);margin-bottom:.25rem">Step 1: Choose Specialty &amp; Doctor</legend>
+        <p class="muted" style="font-size:.9rem;margin-bottom:1.25rem">Select your clinical department and preferred consulting physician.</p>
+        <div class="form-grid">
+          {% include 'hospital/form_field.html' with field=form.department label='Department / Specialty' required=True %}
+          {% include 'hospital/form_field.html' with field=form.doctor label='Consulting Physician' required=True help='Choose a doctor from the selected department.' %}
+        </div>
+      </fieldset>
+
+      <fieldset style="border:0;padding:0;margin:0 0 2rem">
+        <legend style="font-size:1.25rem;font-weight:800;color:var(--slate-900);margin-bottom:.25rem">Step 2: Select Date &amp; Time</legend>
+        <p class="muted" style="font-size:.9rem;margin-bottom:1.25rem">Pick a convenient date and time. Clinics run Monday &ndash; Saturday, 9:00 AM &ndash; 5:00 PM.</p>
+        <div class="form-grid">
+          {% include 'hospital/form_field.html' with field=form.appointment_date label='Appointment Date' required=True %}
+          {% include 'hospital/form_field.html' with field=form.appointment_time label='Preferred Time' required=True help='30-minute slots between 09:00 and 16:30.' %}
+        </div>
+      </fieldset>
+
+      <fieldset style="border:0;padding:0;margin:0">
+        <legend style="font-size:1.25rem;font-weight:800;color:var(--slate-900);margin-bottom:.25rem">Step 3: Patient Information</legend>
+        <p class="muted" style="font-size:.9rem;margin-bottom:1.25rem">Enter your contact details to receive your booking reference and confirmation.</p>
+        <div class="form-grid">
+          {% include 'hospital/form_field.html' with field=form.patient_name label='Full Legal Name' required=True %}
+          {% include 'hospital/form_field.html' with field=form.patient_email label='Email Address' required=True %}
+          {% include 'hospital/form_field.html' with field=form.patient_phone label='Mobile Contact Number' required=True %}
+          {% include 'hospital/form_field.html' with field=form.reason label='Symptoms / Reason for Visit' required=True full=True %}
+        </div>
+      </fieldset>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-lg"><svg class="icon"><use href="#i-calendar"></use></svg> Confirm &amp; Book Appointment</button>
+        <a href="{% url 'home' %}" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+
+    <div class="assurance-strip">
+      <span><svg class="icon"><use href="#i-shield"></use></svg> HIPAA Compliant Privacy</span>
+      <span><svg class="icon"><use href="#i-mail"></use></svg> Instant Email Confirmation</span>
+      <span><svg class="icon"><use href="#i-building"></use></svg> Free Valet Parking Included</span>
+    </div>
+  </div>
+</section>
+{% endblock %}

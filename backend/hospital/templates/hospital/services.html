@@ -1,0 +1,82 @@
+{% extends 'hospital/base.html' %}
+{% block title %}Medical Services — Remo H Hospital{% endblock %}
+{% block description %}Explore clinical packages, diagnostics, emergency and wellness services at Remo H Hospital.{% endblock %}
+
+{% block content %}
+{% include 'hospital/page_header.html' with eyebrow='Full-Spectrum Hospital Care' title='Medical Services & Clinical Packages' subtitle='From routine wellness screenings and rapid lab diagnostics to emergency surgical care and ongoing restorative therapies.' %}
+
+<section class="section-tight">
+  <div class="container">
+    <div class="search-form">
+      <svg class="icon"><use href="#i-search"></use></svg>
+      <form method="get" action="{% url 'services' %}" style="display:flex;gap:.6rem;flex:1;flex-wrap:wrap">
+        <input type="search" name="q" value="{{ query }}" placeholder="Search services (e.g. Checkup, MRI, Dental, Surgery, Vaccine)..." aria-label="Search services" style="flex:1;min-width:220px;border:0;outline:none;font:inherit;font-size:.95rem;background:transparent">
+        {% if category %}<input type="hidden" name="category" value="{{ category }}">{% endif %}
+        <button class="btn btn-primary btn-sm" type="submit">Search</button>
+      </form>
+    </div>
+
+    <div class="chips-row" style="margin-top:1.25rem">
+      <a href="{% url 'services' %}{% if query %}?q={{ query|urlencode }}{% endif %}" class="chip chip-button {% if not category %}chip-active{% endif %}">All</a>
+      {% for item in categories %}
+      <a href="?category={{ item }}{% if query %}&q={{ query|urlencode }}{% endif %}" class="chip chip-button {% if category == item %}chip-active{% endif %}">{{ item }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="results-bar" style="margin-top:1.5rem">
+      <span>Showing <strong>{{ services|length }}</strong> available services</span>
+      <span><svg class="icon" style="display:inline;vertical-align:-.2em;color:var(--emerald-600)"><use href="#i-check"></use></svg> Covered by Major Insurers &nbsp;&middot;&nbsp; Same-Day Scheduling Available</span>
+    </div>
+
+    {% if services %}
+    <div class="grid cols-3">
+      {% for service in services %}
+      <article class="card">
+        {% if service.popular %}<span class="badge badge-sky" style="margin-bottom:.85rem"><svg class="icon"><use href="#i-sparkles"></use></svg> Popular Service</span>{% endif %}
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem">
+          <div class="card-icon" style="margin:0"><svg class="icon"><use href="#i-flask"></use></svg></div>
+          <span class="badge badge-muted">{{ service.category }}</span>
+        </div>
+        <h3 class="card-title" style="margin-top:1rem">{{ service.title }}</h3>
+        <p class="card-text">{{ service.description }}</p>
+        <div style="margin-top:1.15rem">
+          <h4 style="font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--slate-500);margin-bottom:.6rem">Included Procedures:</h4>
+          <ul class="check-list compact">
+            {% for feature in service.features|slice:':4' %}<li><svg class="icon"><use href="#i-check"></use></svg> {{ feature }}</li>{% endfor %}
+          </ul>
+        </div>
+        <div class="card-actions" style="align-items:flex-end">
+          <div>
+            <span style="display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--slate-500);font-weight:700">Estimated Cost</span>
+            {% if service.price %}<strong style="font-size:1.25rem;color:var(--sky-700)">${{ service.price }} <small class="muted" style="font-size:.72rem;font-weight:500">starting</small></strong>{% else %}<span class="badge badge-success">Insurance / Clinical Quote</span>{% endif %}
+            <span class="muted" style="display:block;font-size:.75rem">Outpatient Clinic</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.5rem">
+            <a href="{% url 'service_detail' service.pk %}" class="btn btn-outline btn-sm">Details</a>
+            <a href="{% url 'book_appointment' %}?reason={{ service.title|urlencode }}" class="btn btn-primary btn-sm">Book Now</a>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state" style="margin-top:1.5rem">
+      <svg class="icon"><use href="#i-search"></use></svg>
+      <h3>No Services Found</h3>
+      <p>We couldn't find any medical service matching &ldquo;{{ query }}&rdquo;. Try another keyword or clear filters.</p>
+      <a href="{% url 'services' %}" class="btn btn-outline">Reset Filters</a>
+    </div>
+    {% endif %}
+
+    <div class="card" style="background:var(--slate-900);border-color:var(--slate-900);color:#fff;margin-top:2.5rem;padding:2rem">
+      <span class="eyebrow">Need Assistance Selecting a Package?</span>
+      <h3 style="color:#fff">Speak with our Clinical Patient Advisors</h3>
+      <p style="color:var(--slate-300)">Our nurses and care coordinators are available 24/7 to help you understand pre-op instructions, insurance coverage, or customized checkup plans.</p>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem">
+        <a href="tel:+15551234567" class="btn btn-light"><svg class="icon"><use href="#i-phone"></use></svg> (555) 123-4567</a>
+        <a href="{% url 'contact' %}" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.5);background:transparent">Contact Desk</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

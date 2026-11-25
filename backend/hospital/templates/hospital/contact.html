@@ -1,0 +1,107 @@
+{% extends 'hospital/base.html' %}
+{% block title %}Contact Us — Remo H Hospital{% endblock %}
+{% block description %}Contact Remo H Hospital for appointments, medical records, billing and visiting information.{% endblock %}
+
+{% block content %}
+{% include 'hospital/page_header.html' with eyebrow='Patient Support & Administration' title='Get in Touch With Us' subtitle='Have inquiries regarding doctor availability, medical records, billing statements, or visiting guidelines? We are here to help.' %}
+
+<section class="section-tight">
+  <div class="container detail-grid" style="grid-template-columns:.9fr 1.1fr;gap:2rem">
+    <div class="stack">
+      <div class="card" style="border-color:#fecdd3;background:linear-gradient(135deg,#fff1f2,#fff)">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem">
+          <span class="badge" style="background:#ffe4e6;color:#be123c"><span style="width:8px;height:8px;border-radius:50%;background:#f43f5e;display:inline-block"></span> 24/7 Level-1 Trauma Hotline</span>
+          <span class="badge badge-success">Zero Wait</span>
+        </div>
+        <h2 style="font-size:1.9rem;margin:1rem 0 .25rem">+1 (555) 911-0000</h2>
+        <p class="card-text">Dedicated direct dispatch line for acute medical emergencies, stroke, trauma, and immediate ambulance response.</p>
+        <a href="tel:+15559110000" class="btn btn-primary btn-block"><svg class="icon"><use href="#i-phone"></use></svg> Call Emergency Dispatch</a>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Hospital Location</h3>
+        <p class="card-text">123 Healthcare Avenue, Medical District<br>Central Metropolis, NY 12345</p>
+        <h3 class="card-title" style="margin-top:1.25rem">Telephone Contacts</h3>
+        <ul class="check-list compact">
+          <li><svg class="icon"><use href="#i-phone"></use></svg> Main Desk: <a href="tel:+15551234567">+1 (555) 123-4567</a></li>
+          <li><svg class="icon"><use href="#i-phone"></use></svg> Appointments: <a href="tel:+15551234568">+1 (555) 123-4568</a></li>
+          <li><svg class="icon"><use href="#i-phone"></use></svg> Billing &amp; Insurance: <a href="tel:+15551234569">+1 (555) 123-4569</a></li>
+        </ul>
+        <h3 class="card-title" style="margin-top:1.25rem">Electronic Inquiries</h3>
+        <ul class="check-list compact">
+          <li><svg class="icon"><use href="#i-mail"></use></svg> General: <a href="mailto:info@remohospital.com">info@remohospital.com</a></li>
+          <li><svg class="icon"><use href="#i-mail"></use></svg> Appointments: <a href="mailto:appointments@remohospital.com">appointments@remohospital.com</a></li>
+        </ul>
+        <h3 class="card-title" style="margin-top:1.25rem">Visiting &amp; Operating Hours</h3>
+        <ul class="check-list compact">
+          <li><svg class="icon"><use href="#i-clock"></use></svg> Outpatient Specialist Clinics: Mon &ndash; Sat: 8:00 AM &ndash; 8:00 PM</li>
+          <li><svg class="icon"><use href="#i-clock"></use></svg> Inpatient Visiting Hours: 10:00 AM &ndash; 8:00 PM Daily</li>
+          <li><svg class="icon"><use href="#i-clock"></use></svg> <strong style="color:#be123c">Emergency Trauma Unit: Open 24/7 (365 Days)</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <form method="post" class="form-card" novalidate>
+      {% csrf_token %}
+      <div style="margin-bottom:1.5rem">
+        <h2 style="font-size:1.5rem;margin-bottom:.25rem">Send an Inquiry</h2>
+        <p class="muted" style="margin:0;font-size:.9rem">Fill in your details below. Our patient support coordinators respond within 24 business hours.</p>
+      </div>
+      <div class="form-grid">
+        {% include 'hospital/form_field.html' with field=form.name label='Your Full Name' required=True %}
+        {% include 'hospital/form_field.html' with field=form.email label='Email Address' required=True %}
+        {% include 'hospital/form_field.html' with field=form.phone label='Phone Number' help='Optional' %}
+        <div class="form-group full {% if form.subject.errors %}has-error{% endif %}">
+          <label class="form-label" for="{{ form.subject.id_for_label }}">Inquiry Topic <span style="color:#be123c">*</span></label>
+          {{ form.subject }}
+          {% for error in form.subject.errors %}<ul class="errorlist"><li>{{ error }}</li></ul>{% endfor %}
+        </div>
+        {% include 'hospital/form_field.html' with field=form.message label='Detailed Message' required=True full=True %}
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary btn-lg" type="submit"><svg class="icon"><use href="#i-message"></use></svg> Submit Inquiry</button>
+        <span class="muted" style="font-size:.8rem">We typically reply within 24 business hours.</span>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="section" style="background:var(--slate-50)">
+  <div class="container">
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="detail-grid" style="gap:0">
+        <div style="background:var(--slate-900);color:#fff;padding:2.5rem">
+          <span class="eyebrow">Campus Navigation</span>
+          <h3 style="color:#fff">Remo Hospital Medical Campus</h3>
+          <p style="color:var(--slate-300)">123 Healthcare Avenue, Medical District</p>
+          <a href="https://maps.google.com/?q=123+Healthcare+Avenue+Medical+District" target="_blank" rel="noopener noreferrer" class="btn btn-light btn-sm">Open in Maps <svg class="icon"><use href="#i-arrow-up-right"></use></svg></a>
+          <div class="chip-row" style="margin-top:1.5rem">
+            <span class="chip chip-light"><svg class="icon"><use href="#i-building"></use></svg> Free 2-hr Parking Structure A</span>
+            <span class="chip chip-light"><svg class="icon"><use href="#i-arrow-right"></use></svg> Metro Line 4 &ndash; Health Center Station</span>
+          </div>
+        </div>
+        <div style="padding:2.5rem">
+          <h3>Hospital Entry Gates</h3>
+          <div class="detail-row"><span>Gate 1</span><div><strong>Emergency &amp; Trauma</strong><br>24/7 dedicated ambulance ramp and urgent patient drop-off.</div></div>
+          <div class="detail-row"><span>Gate 2</span><div><strong>Main Outpatient Atrium</strong><br>General OPD check-in, physician consultation suites, and diagnostics.</div></div>
+          <div class="detail-row"><span>Gate 3</span><div><strong>Women &amp; Pediatric Wing</strong><br>Maternity intake, child wellness clinics, and neonatal center.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width:860px;margin:3rem auto 0">
+      <div class="section-head">
+        <span class="eyebrow">Frequently Asked Questions</span>
+        <h2 class="section-title">Visitor &amp; Patient Inquiries</h2>
+        <p class="section-subtitle">Helpful answers regarding visiting hours, parking validation, and medical requests.</p>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item"><summary>Where is the main hospital visitor parking located?<svg class="icon"><use href="#i-arrow-right"></use></svg></summary><p>Patient and visitor parking is available 24/7 in Parking Structure A directly on Healthcare Avenue. Complimentary 2-hour parking validation is provided for all outpatient appointments at the reception desk.</p></details>
+        <details class="faq-item"><summary>How do I request official copies of my medical records?<svg class="icon"><use href="#i-arrow-right"></use></svg></summary><p>You can request records by emailing records@remohospital.com with your patient identification, or via our Health Records desk located on Floor 1 of Building A. Requests are typically processed within 24&ndash;48 hours.</p></details>
+        <details class="faq-item"><summary>What should I do in an emergency situation?<svg class="icon"><use href="#i-arrow-right"></use></svg></summary><p>Call our Emergency Trauma Hotline immediately at +1 (555) 911-0000 or dial 911. Our Level-1 Emergency Department is open 24/7 with immediate paramedic dispatch and dedicated resuscitation teams.</p></details>
+        <details class="faq-item"><summary>Can I reschedule an appointment over the phone?<svg class="icon"><use href="#i-arrow-right"></use></svg></summary><p>Yes, call our Patient Scheduling Line at +1 (555) 123-4568 between 8:00 AM and 8:00 PM Monday through Saturday. Please have your booking reference number ready.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

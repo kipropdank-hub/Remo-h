@@ -187,10 +187,11 @@ MAILERS = {
     },
 }
 
-# CORS settings - CORS_ALLOWED_ORIGINS should contain the frontend origin(s).
+# CORS settings - only relevant for the optional JSON API at /api/.
+# The Django-rendered site is same-origin and does not need CORS.
 CORS_ALLOWED_ORIGINS = env_list(
     'CORS_ALLOWED_ORIGINS',
-    'http://localhost:3000,http://127.0.0.1:3000',
+    'http://localhost:8000,http://127.0.0.1:8000',
 )
 
 CORS_ALLOW_CREDENTIALS = True

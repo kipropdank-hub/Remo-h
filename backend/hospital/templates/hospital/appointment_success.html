@@ -1,0 +1,39 @@
+{% extends 'hospital/base.html' %}
+{% block title %}Appointment Confirmed — Remo H Hospital{% endblock %}
+
+{% block content %}
+<section class="section-tight">
+  <div class="container" style="max-width:760px">
+    <div class="form-card" style="text-align:center">
+      <div class="success-mark"><svg class="icon"><use href="#i-check"></use></svg></div>
+      <span class="eyebrow">Booking Confirmed</span>
+      <h1 style="font-size:2.2rem">Appointment Successfully Scheduled</h1>
+      <p class="lead text-center" style="margin:0 auto 2rem">Your consultation has been recorded in our hospital system. A confirmation will be sent to <strong>{{ appointment.patient_email }}</strong>.</p>
+
+      <div class="receipt">
+        <div class="receipt-head">
+          <span>Booking Reference</span>
+          <strong>RM-{{ appointment.pk|stringformat:'06d' }}</strong>
+        </div>
+        <div class="detail-list" style="text-align:left;margin-bottom:0">
+          <div class="detail-row"><span>Patient Name</span><strong>{{ appointment.patient_name }}</strong></div>
+          <div class="detail-row"><span>Phone</span><strong>{{ appointment.patient_phone }}</strong></div>
+          <div class="detail-row"><span>Consulting Doctor</span><strong>Dr. {{ appointment.doctor.name }}</strong></div>
+          <div class="detail-row"><span>Department</span><strong>{{ appointment.department.name }}</strong></div>
+          <div class="detail-row"><span>Appointment Date</span><strong>{{ appointment.appointment_date|date:'F j, Y' }}</strong></div>
+          <div class="detail-row"><span>Appointment Time</span><strong>{{ appointment.appointment_time|time:'g:i A' }}</strong></div>
+          <div class="detail-row"><span>Status</span><span class="badge badge-sky">{{ appointment.get_status_display }}</span></div>
+          <div class="detail-row"><span>Estimated Fee</span><strong>${{ appointment.doctor.consultation_fee }}</strong></div>
+        </div>
+        <p class="muted" style="font-size:.82rem;margin:1.25rem 0 0">Location: Building A, Outpatient Clinic (Suite 204)</p>
+      </div>
+
+      <div class="form-actions" style="justify-content:center;margin-top:2rem">
+        <a href="{% url 'book_appointment' %}" class="btn btn-primary">Book Another Appointment</a>
+        <button type="button" class="btn btn-outline" onclick="window.print()">Print Slip</button>
+        <a href="{% url 'home' %}" class="btn btn-ghost">Return to Homepage</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

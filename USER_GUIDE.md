@@ -1,5 +1,9 @@
 # Remo Hospital Website - User Guide
 
+> **Current architecture:** Open `http://localhost:8000` after starting Django —
+> the UI is server-rendered by Django and no separate frontend server is needed.
+> See [README.md](README.md) for current setup instructions.
+
 ## 🏥 Welcome to Remo Hospital
 
 Remo Hospital is a modern, full-featured hospital management website that allows patients to:

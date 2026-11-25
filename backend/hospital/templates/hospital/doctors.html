@@ -1,0 +1,104 @@
+{% extends 'hospital/base.html' %}
+{% block title %}Our Specialists — Remo H Hospital{% endblock %}
+{% block description %}Browse verified doctor profiles, filter by specialty and book a consultation.{% endblock %}
+
+{% block content %}
+{% include 'hospital/page_header.html' with eyebrow='Medical Faculty Directory' title='Meet Our Specialist Physicians' subtitle='Browse verified profiles, review clinical qualifications, check schedule availability, and reserve consultation slots.' %}
+
+<section class="section-tight">
+  <div class="container">
+    <form method="get" action="{% url 'doctors' %}" class="filter-bar">
+      <div class="filter-grid">
+        <div class="form-group">
+          <label class="form-label" for="doctor-search">Search</label>
+          <div style="position:relative">
+            <svg class="icon" style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:var(--slate-400)"><use href="#i-search"></use></svg>
+            <input class="form-control" style="padding-left:2.4rem" id="doctor-search" type="search" name="q" value="{{ query }}" placeholder="Search by name, specialization, or qualification...">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="department-filter">Department</label>
+          <select class="form-control" id="department-filter" name="department">
+            <option value="">All Departments</option>
+            {% for dept in departments %}
+            <option value="{{ dept.id }}" {% if department_id == dept.id|stringformat:'s' %}selected{% endif %}>{{ dept.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sort-filter">Sort</label>
+          <select class="form-control" id="sort-filter" name="sort">
+            <option value="experience" {% if sort == 'experience' %}selected{% endif %}>Experience (High to Low)</option>
+            <option value="fee_low" {% if sort == 'fee_low' %}selected{% endif %}>Fee: Lowest to Highest</option>
+            <option value="fee_high" {% if sort == 'fee_high' %}selected{% endif %}>Fee: Highest to Lowest</option>
+            <option value="name" {% if sort == 'name' %}selected{% endif %}>Alphabetical: A to Z</option>
+          </select>
+        </div>
+        <label class="filter-check"><input type="checkbox" name="available" value="on" {% if available_only %}checked{% endif %}> Available Only</label>
+      </div>
+      <div class="chips-row" style="margin-top:1rem">
+        <a href="{% url 'doctors' %}" class="chip chip-button {% if not department_id %}chip-active{% endif %}">All Specialties</a>
+        {% for dept in departments %}
+        <a href="{% url 'doctors' %}?department={{ dept.id }}{% if available_only %}&available=on{% endif %}" class="chip chip-button {% if department_id == dept.id|stringformat:'s' %}chip-active{% endif %}">{{ dept.name }}</a>
+        {% endfor %}
+      </div>
+    </form>
+
+    <div class="results-bar">
+      <span>Showing <strong>{{ doctors|length }}</strong> of <strong>{{ all_doctors_count }}</strong> Specialists</span>
+      {% if query or department_id or available_only %}
+      <a href="{% url 'doctors' %}" class="link-arrow"><svg class="icon"><use href="#i-x"></use></svg> Reset Filters</a>
+      {% endif %}
+    </div>
+
+    {% if doctors %}
+    <div class="doctor-grid">
+      {% for doctor in doctors %}
+      <article class="card doctor-card">
+        <div class="doctor-card-top"></div>
+        <div class="doctor-card-body">
+          <div class="doctor-head">
+            {% if doctor.image %}<div class="doctor-avatar"><img src="{{ doctor.image.url }}" alt="{{ doctor.name }}"></div>{% else %}<div class="doctor-avatar">{{ doctor.name|slice:2 }}</div>{% endif %}
+            <div>
+              <h3>{{ doctor.name }}</h3>
+              <div class="doctor-spec">{{ doctor.specialization }}</div>
+              <span class="badge badge-sky" style="margin-top:.35rem">{{ doctor.department.name }}</span>
+            </div>
+          </div>
+          <div style="margin-bottom:.75rem">
+            {% if doctor.available %}<span class="badge badge-success"><svg class="icon"><use href="#i-check"></use></svg> Available</span>{% else %}<span class="badge badge-muted">Unavailable</span>{% endif %}
+          </div>
+          <div class="doctor-meta">
+            <div><span>Experience</span><strong>{{ doctor.experience_years }} yrs</strong></div>
+            <div><span>Qualification</span><strong title="{{ doctor.qualification }}">{{ doctor.qualification|truncatechars:28 }}</strong></div>
+          </div>
+          <p class="doctor-bio">{% if doctor.bio %}{{ doctor.bio }}{% else %}Specialist in {{ doctor.specialization }} with {{ doctor.experience_years }} years of dedicated patient care.{% endif %}</p>
+          <div class="doctor-meta" style="grid-template-columns:1fr;border-block:none;padding-bottom:0;margin-bottom:1rem">
+            <div><span>Consultation</span><strong style="font-size:1.1rem">${{ doctor.consultation_fee }}</strong></div>
+          </div>
+          <div class="doctor-actions">
+            <a href="{% url 'doctor_detail' doctor.pk %}" class="btn btn-outline btn-sm">Details</a>
+            {% if doctor.available %}<a href="{% url 'book_appointment' %}?doctor={{ doctor.pk }}&department={{ doctor.department_id }}" class="btn btn-primary btn-sm">Book Appointment</a>{% else %}<span class="btn btn-secondary btn-sm" style="pointer-events:none">Not Available</span>{% endif %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <svg class="icon"><use href="#i-search"></use></svg>
+      <h3>No Specialists Found</h3>
+      <p>No doctor matched your search or department filter. Try clearing filters.</p>
+      <a href="{% url 'doctors' %}" class="btn btn-outline">Clear All Filters</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container cta-inner">
+    <div><h2>Need Help Choosing a Specialist?</h2><p>Our patient advisors can match you with the right doctor for your condition.</p></div>
+    <a href="{% url 'contact' %}" class="btn btn-light btn-lg">Contact Clinic Desk</a>
+  </div>
+</section>
+{% endblock %}

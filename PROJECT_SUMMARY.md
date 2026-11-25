@@ -1,5 +1,10 @@
 # 🏥 Remo Hospital Website - Complete Project Summary
 
+> **Current architecture:** Remo H is now a Django-only application. The React
+> frontend described in some sections below has been removed; see
+> [README.md](README.md) and [DEPLOYMENT.md](DEPLOYMENT.md) for the current
+> setup, pages and deployment steps.
+
 ## 📍 Project Location
 
 **Full Path**: `D:\Softwares\Remo-h`

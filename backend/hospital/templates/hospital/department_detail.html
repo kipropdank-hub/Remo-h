@@ -1,0 +1,39 @@
+{% extends 'hospital/base.html' %}
+{% load hospital_tags %}
+{% block title %}{{ department.name }} — Remo H Hospital{% endblock %}
+{% block description %}{{ department.description }}{% endblock %}
+
+{% block content %}
+{% include 'hospital/page_header.html' with eyebrow='Specialized Clinic' title=department.name subtitle=department.description %}
+
+<section class="section-tight">
+  <div class="container">
+    <nav class="breadcrumb"><a href="{% url 'departments' %}">Departments</a><span>/</span><span>{{ department.name }}</span></nav>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem">
+      <h2 style="font-size:1.5rem;margin:0">Specialists in {{ department.name }}</h2>
+      <a href="{% url 'book_appointment' %}?department={{ department.id }}" class="btn btn-primary"><svg class="icon"><use href="#i-calendar"></use></svg> Book in this Department</a>
+    </div>
+    {% if doctors %}
+    <div class="doctor-grid">
+      {% for doctor in doctors %}
+      <article class="card doctor-card">
+        <div class="doctor-card-top"></div>
+        <div class="doctor-card-body">
+          <div class="doctor-head">
+            <div class="doctor-avatar">{{ doctor.name|slice:2 }}</div>
+            <div><h3>{{ doctor.name }}</h3><div class="doctor-spec">{{ doctor.specialization }}</div><div class="doctor-dept">{{ doctor.experience_years }} years experience</div></div>
+          </div>
+          <div class="doctor-actions">
+            <a href="{% url 'doctor_detail' doctor.pk %}" class="btn btn-outline btn-sm">View Profile</a>
+            {% if doctor.available %}<a href="{% url 'book_appointment' %}?doctor={{ doctor.pk }}&department={{ department.id }}" class="btn btn-primary btn-sm">Book Appointment</a>{% endif %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state"><svg class="icon"><use href="#i-stethoscope"></use></svg><h3>No Specialists Listed Yet</h3><p>Please check back soon or contact our scheduling desk.</p><a href="{% url 'contact' %}" class="btn btn-outline">Contact Desk</a></div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

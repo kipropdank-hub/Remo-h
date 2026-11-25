@@ -1,0 +1,197 @@
+{% extends 'hospital/base.html' %}
+{% load hospital_tags %}
+{% block title %}Remo H Hospital — World-Class Medical Care{% endblock %}
+{% block description %}Board-certified physicians, state-of-the-art diagnostics and real-time appointment booking at Remo H Hospital.{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow">JCI Accredited Healthcare &bull; Patient-Centered Excellence</span>
+      <h1 class="hero-title">World-Class Medical Care, <em>Tailored To Your Needs</em></h1>
+      <p class="lead">Experience exceptional healthcare with board-certified physicians, state-of-the-art diagnostics, and real-time appointment booking for you and your family.</p>
+      <div class="hero-actions">
+        <a href="{% url 'book_appointment' %}" class="btn btn-primary btn-lg"><svg class="icon"><use href="#i-calendar"></use></svg> Book Appointment <svg class="icon"><use href="#i-arrow-right"></use></svg></a>
+        <a href="{% url 'doctors' %}" class="btn btn-outline btn-lg">Find a Doctor</a>
+      </div>
+      <div class="hero-trust">
+        <span><svg class="icon"><use href="#i-check"></use></svg> No Waiting Queues</span>
+        <span><svg class="icon"><use href="#i-check"></use></svg> Direct Specialist Access</span>
+        <span><svg class="icon"><use href="#i-check"></use></svg> Instant Slot Confirmation</span>
+      </div>
+    </div>
+    <aside class="hero-panel">
+      <div class="hero-panel-head">
+        <h3>Remo Hospital Campus</h3>
+        <span class="hero-badge">Open 24/7</span>
+      </div>
+      <div class="grid cols-2" style="gap:.75rem">
+        {% for dept in departments|slice:':4' %}
+        <a href="{% url 'doctors' %}?department={{ dept.id }}" class="mini-tile">
+          <svg class="icon"><use href="#i-{{ dept.icon|icon_symbol }}"></use></svg>
+          <strong>{{ dept.name }}</strong>
+          <span>{{ dept.doctor_count }} Specialists</span>
+        </a>
+        {% empty %}
+        <span class="muted">Specialties coming soon.</span>
+        {% endfor %}
+      </div>
+      <div class="hero-callout">
+        <div>
+          <strong>Need emergency triage?</strong>
+          <span>Direct ambulance line: +254 790520965</span>
+        </div>
+        <a href="tel:+15559110000" class="btn btn-light btn-sm">Call</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<div class="container" style="position:relative; z-index:2; margin-top:-2rem">
+  <form class="hero-panel" method="get" action="{% url 'book_appointment' %}">
+    <div class="hero-panel-head">
+      <div>
+        <h3 style="margin:0">Quick Appointment Booking</h3>
+        <p class="muted" style="font-size:.85rem; margin:0">Select department and physician to see instant openings.</p>
+      </div>
+      <span class="hero-badge"><svg class="icon" style="width:.9rem;height:.9rem"><use href="#i-clock"></use></svg> Real-time Slot Sync</span>
+    </div>
+    <div class="quick-grid">
+      <div class="form-group">
+        <label class="form-label" for="quick-department">1. Department</label>
+        <select class="form-control" id="quick-department" name="department">
+          <option value="">Select Specialty</option>
+          {% for dept in departments %}<option value="{{ dept.id }}">{{ dept.name }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="quick-doctor">2. Specialist</label>
+        <select class="form-control" id="quick-doctor" name="doctor">
+          <option value="">Any Available Doctor</option>
+          {% for doctor in doctors %}
+          <option value="{{ doctor.id }}" data-department="{{ doctor.department_id }}">{{ doctor.name }} &mdash; {{ doctor.specialization }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="quick-date">3. Preferred Date</label>
+        <input class="form-control" id="quick-date" type="date" name="date">
+      </div>
+      <button class="btn btn-primary btn-block" type="submit"><svg class="icon"><use href="#i-search"></use></svg> Find &amp; Book Slot</button>
+    </div>
+  </form>
+</div>
+
+<section class="section-tight">
+  <div class="container">
+    <div class="stats">
+      {% for stat in stats %}
+      <div class="stat">
+        <span class="stat-value">{{ stat.value }}</span>
+        <span class="stat-label">{{ stat.label }}</span>
+        <span class="stat-sub">{{ stat.sub }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:1rem">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Why Choose Remo</span>
+      <h2 class="section-title">Excellence in Every Consultation</h2>
+      <p class="section-subtitle">Coordinated healthcare backed by board-certified physicians, empathetic clinical staff, and modern infrastructure.</p>
+    </div>
+    <div class="grid cols-4">
+      {% for feature in features %}
+      <div class="card">
+        <div class="card-icon"><svg class="icon"><use href="#i-{{ feature.icon }}"></use></svg></div>
+        <h3 class="card-title">{{ feature.title }}</h3>
+        <p class="card-text">{{ feature.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--slate-50)">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Specialized Clinics</span>
+      <h2 class="section-title">Our Core Medical Departments</h2>
+      <p class="section-subtitle">Comprehensive specialized care units equipped with modern diagnostic systems and dedicated clinical teams.</p>
+      <a href="{% url 'departments' %}" class="link-arrow">Explore All Departments <svg class="icon"><use href="#i-arrow-right"></use></svg></a>
+    </div>
+    <div class="grid cols-3">
+      {% for dept in departments %}
+      <a class="card" href="{% url 'doctors' %}?department={{ dept.id }}" style="display:block; color:inherit">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.75rem">
+          <div class="card-icon" style="margin:0"><svg class="icon"><use href="#i-{{ dept.icon|icon_symbol }}"></use></svg></div>
+          <span class="badge badge-sky">{{ dept.doctor_count }} Doctors</span>
+        </div>
+        <h3 class="card-title">{{ dept.name }}</h3>
+        <p class="card-text">{{ dept.description }}</p>
+        <span class="card-link">View Doctors <svg class="icon"><use href="#i-arrow-right"></use></svg></span>
+      </a>
+      {% empty %}
+      <div class="empty-state">No departments have been added yet.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Patient Feedback</span>
+      <h2 class="section-title">What Our Patients Say</h2>
+      <p class="section-subtitle">Authentic experiences from patients and families who trust Remo Hospital.</p>
+    </div>
+    <div class="testimonial-grid">
+      {% for item in testimonials %}
+      <div class="card testimonial">
+        <span class="stars">{% for i in "12345" %}<svg class="icon"><use href="#i-star"></use></svg>{% endfor %}</span>
+        <blockquote>&ldquo;{{ item.comment }}&rdquo;</blockquote>
+        <footer>
+          <span class="avatar">{{ item.name|first }}</span>
+          <div><strong style="color:var(--slate-900); display:block">{{ item.name }}</strong><span class="muted">{{ item.department }}</span></div>
+          <span title="Verified Patient" style="width:8px;height:8px;border-radius:50%;background:var(--emerald-600);margin-left:auto"></span>
+        </footer>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--slate-50)">
+  <div class="container" style="max-width:860px">
+    <div class="section-head">
+      <span class="eyebrow">Common Questions</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-subtitle">Got questions about scheduling, insurance, or emergency intake?</p>
+    </div>
+    <div class="faq-list">
+      {% for faq in faqs %}
+      <details class="faq-item">
+        <summary>{{ faq.question }}<svg class="icon"><use href="#i-arrow-right"></use></svg></summary>
+        <p>{{ faq.answer }}</p>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container cta-inner">
+    <div>
+      <h2>Ready to Prioritize Your Health?</h2>
+      <p>Book a personalized appointment with one of our 5+ board-certified medical specialists today.</p>
+    </div>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+      <a href="{% url 'book_appointment' %}" class="btn btn-light btn-lg">Book Appointment Online</a>
+      <a href="{% url 'contact' %}" class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,.5);background:transparent">Contact Clinic Desk</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'hospital/base.html' %}
+{% block title %}Dr. {{ doctor.name }} — Remo H Hospital{% endblock %}
+{% block description %}{{ doctor.specialization }} at Remo H Hospital. View profile and book a consultation.{% endblock %}
+
+{% block content %}
+<section class="detail-hero">
+  <div class="container">
+    <nav class="breadcrumb"><a href="{% url 'doctors' %}">Doctors</a><span>/</span><span>{{ doctor.name }}</span></nav>
+    <div class="detail-grid">
+      <div style="display:flex;gap:1.25rem;align-items:center">
+        {% if doctor.image %}<div class="doctor-avatar" style="width:92px;height:92px"><img src="{{ doctor.image.url }}" alt="{{ doctor.name }}"></div>{% else %}<div class="doctor-avatar" style="width:92px;height:92px;font-size:1.8rem">{{ doctor.name|slice:2 }}</div>{% endif %}
+        <div>
+          <span class="eyebrow">Verified Specialist</span>
+          <h1 style="font-size:2.3rem;margin:0">{{ doctor.name }}</h1>
+          <p style="color:var(--sky-700);font-weight:700;margin:.25rem 0">{{ doctor.specialization }}</p>
+          <p class="muted" style="margin:0">{{ doctor.department.name }} Department</p>
+          <div style="margin-top:.75rem">{% if doctor.available %}<span class="badge badge-success"><svg class="icon"><use href="#i-check"></use></svg> Available for booking</span>{% else %}<span class="badge badge-muted">Currently unavailable</span>{% endif %}</div>
+        </div>
+      </div>
+      <div class="detail-panel">
+        <div class="doctor-meta" style="grid-template-columns:repeat(3,1fr);border:0;padding:0;margin:0">
+          <div><span>Experience</span><strong>{{ doctor.experience_years }} Years</strong></div>
+          <div><span>Education</span><strong>{{ doctor.qualification }}</strong></div>
+          <div><span>Consultation</span><strong>${{ doctor.consultation_fee }}</strong></div>
+        </div>
+        <div class="doctor-actions" style="margin-top:1.5rem">
+          {% if doctor.available %}<a href="{% url 'book_appointment' %}?doctor={{ doctor.pk }}&department={{ doctor.department_id }}" class="btn btn-primary btn-block"><svg class="icon"><use href="#i-calendar"></use></svg> Book Appointment with this Doctor</a>{% else %}<span class="btn btn-secondary btn-block" style="pointer-events:none">Currently Unavailable</span>{% endif %}
+          <a href="{% url 'contact' %}" class="btn btn-outline">Contact Clinic Desk</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container detail-grid">
+    <div>
+      <span class="eyebrow">Physician Overview</span>
+      <h2>About {{ doctor.name }}</h2>
+      <p>{% if doctor.bio %}{{ doctor.bio }}{% else %}{{ doctor.name }} is a dedicated medical specialist with over {{ doctor.experience_years }} years of clinical excellence in {{ doctor.specialization }}. Focused on delivering compassionate, evidence-based care.{% endif %}</p>
+      <div class="detail-row" style="grid-template-columns:130px 1fr">
+        <span>Department</span><div><a href="{% url 'department_detail' doctor.department_id %}">{{ doctor.department.name }}</a></div>
+      </div>
+      <div class="detail-row" style="grid-template-columns:130px 1fr">
+        <span>Contact</span><div><a href="mailto:{{ doctor.email }}">{{ doctor.email }}</a><br><a href="tel:{{ doctor.phone }}">{{ doctor.phone }}</a></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h3 class="card-title">Practice Highlights</h3>
+        <ul class="check-list">
+          <li><svg class="icon"><use href="#i-check"></use></svg> Comprehensive diagnostic evaluation</li>
+          <li><svg class="icon"><use href="#i-check"></use></svg> Evidence-based treatment protocols</li>
+          <li><svg class="icon"><use href="#i-check"></use></svg> Pre- and post-procedure counseling</li>
+          <li><svg class="icon"><use href="#i-check"></use></svg> Direct follow-up coordination</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Consulting Hours</h3>
+        <p class="card-text"><svg class="icon" style="display:inline;vertical-align:-.2em;color:var(--sky-600)"><use href="#i-clock"></use></svg> Mon&ndash;Fri: 9:00 AM &ndash; 5:00 PM</p>
+        <p class="card-text">Saturday: 9:00 AM &ndash; 1:00 PM</p>
+        <p class="card-text">Clinic Suite 304, Building A</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

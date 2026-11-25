@@ -1,0 +1,114 @@
+{% extends 'hospital/base.html' %}
+{% block title %}About Us — Remo H Hospital{% endblock %}
+{% block description %}Discover the story, values and clinical leadership behind Remo H Hospital.{% endblock %}
+
+{% block content %}
+{% include 'hospital/page_header.html' with eyebrow='About Remo Hospital Healthcare' title='Dedicated to Compassionate, Excellence-Driven Healthcare' subtitle='For over 15 years, Remo Hospital has combined world-class medical science with compassionate patient-centered care and clinical innovation.' %}
+
+<section class="section">
+  <div class="container">
+    <div class="detail-grid">
+      <div>
+        <span class="eyebrow">Our Clinical Story</span>
+        <h2>Built on Trust, Medical Science, and Genuine Empathy</h2>
+        <p>Founded in 2010, Remo Hospital began with a single mission: to provide the highest standard of specialized clinical care within an environment where every patient is treated with dignity, kindness, and respect.</p>
+        <p>Today, our campus houses state-of-the-art surgical suites, 24/7 Level-1 trauma care, and high-throughput diagnostic laboratories. Every physician, nurse, and technologist is committed to clinical precision and patient safety.</p>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem">
+          <a href="{% url 'doctors' %}" class="btn btn-primary">Meet Our Physicians</a>
+          <a href="{% url 'contact' %}" class="btn btn-outline">Campus Location &amp; Tour</a>
+        </div>
+      </div>
+      <div class="grid cols-2" style="gap:1rem">
+        <div class="stat"><span class="stat-value">15+</span><span class="stat-label">Years of Care</span><span class="stat-sub">Established in 2010</span></div>
+        <div class="stat"><span class="stat-value">5+</span><span class="stat-label">Specialist Doctors</span><span class="stat-sub">Board certified faculty</span></div>
+        <div class="stat"><span class="stat-value">100K+</span><span class="stat-label">Patients Treated</span><span class="stat-sub">99.2% satisfaction</span></div>
+        <div class="stat"><span class="stat-value">50+</span><span class="stat-label">Specialties</span><span class="stat-sub">Comprehensive care</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--slate-50)">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Guiding Principles</span>
+      <h2 class="section-title">The Remo Healthcare Values</h2>
+      <p class="section-subtitle">Every medical decision, triage protocol, and patient interaction is grounded in these foundational principles.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card"><div class="card-icon"><svg class="icon"><use href="#i-heart"></use></svg></div><h3 class="card-title">Compassionate Care</h3><p class="card-text">We treat every patient with warmth, dignity, and empathy, ensuring clinical transparency and personalized comfort.</p></div>
+      <div class="card"><div class="card-icon"><svg class="icon"><use href="#i-award"></use></svg></div><h3 class="card-title">Clinical Excellence</h3><p class="card-text">Adhering to strict international medical protocols, rigorous hygiene standards, and continuous peer-reviewed research.</p></div>
+      <div class="card"><div class="card-icon"><svg class="icon"><use href="#i-users"></use></svg></div><h3 class="card-title">Interdisciplinary Teamwork</h3><p class="card-text">Seamless cross-departmental collaboration between surgeons, radiologists, nurses, and physical therapists.</p></div>
+      <div class="card"><div class="card-icon"><svg class="icon"><use href="#i-sparkles"></use></svg></div><h3 class="card-title">Medical Innovation</h3><p class="card-text">Investing in cutting-edge 3T MRI, robotic surgical suites, and artificial intelligence-assisted diagnostic workflows.</p></div>
+      <div class="card"><div class="card-icon"><svg class="icon"><use href="#i-shield"></use></svg></div><h3 class="card-title">Ethical Integrity</h3><p class="card-text">Upholding strict patient privacy (HIPAA compliant), honest billing practices, and informed consent at every step.</p></div>
+      <div class="card"><div class="card-icon"><svg class="icon"><use href="#i-building"></use></svg></div><h3 class="card-title">Community Accessibility</h3><p class="card-text">Ensuring that top-tier healthcare remains accessible to all community members through subsidized health drives.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:900px">
+    <div class="section-head">
+      <span class="eyebrow">History of Progress</span>
+      <h2 class="section-title">Our Healthcare Journey</h2>
+      <p class="section-subtitle">Key institutional milestones in our pursuit of patient wellness and clinical quality.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item"><span class="timeline-year">2010</span><div><h3>Foundation of Remo Hospital</h3><p>Inaugurated as an outpatient clinical center with 4 core departments and an urgent care room.</p></div></div>
+      <div class="timeline-item"><span class="timeline-year">2015</span><div><h3>Inpatient Hospital Expansion</h3><p>Opened the 200-bed inpatient tower, surgical theaters, and 24/7 Level-1 Trauma Emergency unit.</p></div></div>
+      <div class="timeline-item"><span class="timeline-year">2018</span><div><h3>Advanced Diagnostic &amp; Imaging Center</h3><p>Integrated 3T MRI, molecular pathology laboratory, and cardiovascular catheterization suites.</p></div></div>
+      <div class="timeline-item"><span class="timeline-year">2021</span><div><h3>JCI International Accreditation</h3><p>Recognized for achieving gold standards in clinical safety and patient satisfaction benchmarks.</p></div></div>
+      <div class="timeline-item"><span class="timeline-year">2024</span><div><h3>Regional Telehealth &amp; 50+ Clinics</h3><p>Surpassed 100,000 satisfied patient consults annually across 50 specialized medical disciplines.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--slate-50)">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Clinical Leadership</span>
+      <h2 class="section-title">Hospital Executive Board</h2>
+      <p class="section-subtitle">Physician leadership prioritizing patient safety, medical research, and compassionate healthcare operations.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="leader-avatar">GV</div>
+        <h3 class="card-title">Dr. Gregory Vance, MD, FACS</h3>
+        <p class="muted" style="font-size:.85rem">Chief Medical Officer &amp; Cardiac Surgeon</p>
+        <p class="card-text">Harvard Medical School &bull; 24 yrs Experience</p>
+        <p class="card-text">Leading Remo Hospital clinical governance and surgical precision initiatives since 2012.</p>
+      </div>
+      <div class="card">
+        <div class="leader-avatar">PA</div>
+        <h3 class="card-title">Dr. Patricia Alvarez, MD, PhD</h3>
+        <p class="muted" style="font-size:.85rem">Director of Clinical Research &amp; Neurology</p>
+        <p class="card-text">Johns Hopkins &bull; 20 yrs Experience</p>
+        <p class="card-text">Oversees multidisciplinary research programs and neuro-rehabilitation therapy.</p>
+      </div>
+      <div class="card">
+        <div class="leader-avatar">MS</div>
+        <h3 class="card-title">Marcus Sterling, MHA, RN</h3>
+        <p class="muted" style="font-size:.85rem">Head of Patient Safety &amp; Nursing Operations</p>
+        <p class="card-text">Columbia University &bull; 18 yrs Experience</p>
+        <p class="card-text">Champion for compassionate bedside nursing, patient advocacy, and emergency triage response.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="card" style="background:var(--slate-900); color:#fff; border-color:var(--slate-900); padding:2.5rem">
+      <span class="eyebrow">Certified Standards of Care</span>
+      <h3 style="color:#fff">Accredited by Top Global Healthcare Bodies</h3>
+      <p style="color:var(--slate-300)">Remo Hospital complies with international benchmarks in patient safety, emergency preparedness, clinical research, and sterile hygiene protocols.</p>
+      <div class="chip-row" style="margin-top:1.5rem">
+        <span class="chip chip-light"><svg class="icon"><use href="#i-check"></use></svg> Joint Commission International (JCI)</span>
+        <span class="chip chip-light"><svg class="icon"><use href="#i-check"></use></svg> ISO 9001:2015 Quality Certified</span>
+        <span class="chip chip-light"><svg class="icon"><use href="#i-check"></use></svg> HIPAA Compliant Data Security</span>
+        <span class="chip chip-light"><svg class="icon"><use href="#i-check"></use></svg> American Heart Association Partner</span>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

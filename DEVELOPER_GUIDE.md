@@ -1,5 +1,10 @@
 # Remo Hospital Website - Developer Guide
 
+> **Current architecture:** The app is now served entirely by Django templates,
+> forms and views. React/Vite sections below are historical; the current
+> structure and deployment process are in [README.md](README.md) and
+> [DEPLOYMENT.md](DEPLOYMENT.md).
+
 ## 📋 Table of Contents
 1. [Project Overview](#project-overview)
 2. [Project Structure](#project-structure)

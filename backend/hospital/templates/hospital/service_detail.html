@@ -1,0 +1,38 @@
+{% extends 'hospital/base.html' %}
+{% block title %}{{ service.title }} — Remo H Hospital{% endblock %}
+{% block description %}{{ service.description }}{% endblock %}
+
+{% block content %}
+{% include 'hospital/page_header.html' with eyebrow=service.category title=service.title subtitle=service.description %}
+
+<section class="section-tight">
+  <div class="container">
+    <nav class="breadcrumb"><a href="{% url 'services' %}">Services</a><span>/</span><span>{{ service.title }}</span></nav>
+    <div class="detail-grid">
+      <div class="detail-panel">
+        <div class="card-icon"><svg class="icon"><use href="#i-flask"></use></svg></div>
+        <h2>{{ service.title }}</h2>
+        {% if service.price %}<div class="price">${{ service.price }}</div><p class="muted" style="font-size:.82rem">Estimated starting cost</p>{% else %}<span class="badge badge-success">Covered by Major Insurance / Custom Quote</span>{% endif %}
+        <a href="{% url 'book_appointment' %}?reason={{ service.title|urlencode }}" class="btn btn-primary btn-block" style="margin-top:1.5rem"><svg class="icon"><use href="#i-calendar"></use></svg> Book This Service</a>
+        <a href="{% url 'contact' %}" class="btn btn-outline btn-block" style="margin-top:.6rem">Ask a Question</a>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <h3 class="card-title">Service Overview</h3>
+          <p class="card-text">{{ service.description }}</p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">Included Procedures</h3>
+          <ul class="check-list">
+            {% for feature in service.features %}<li><svg class="icon"><use href="#i-check"></use></svg> {{ feature }}</li>{% endfor %}
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="card-title">Preparation Guidelines</h3>
+          <p class="card-text">Please bring your prior medical reports, identification card, and active insurance details. If fasting is required, you will receive an SMS reminder 24 hours prior.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

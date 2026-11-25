@@ -1,0 +1,6 @@
+<div class="form-group {% if field.errors %}has-error{% endif %} {% if full %}full{% endif %}">
+  <label class="form-label" for="{{ field.id_for_label }}">{{ label }}{% if required %} <span style="color:#be123c">*</span>{% endif %}</label>
+  {{ field }}
+  {% if help %}<span class="form-help">{{ help }}</span>{% endif %}
+  {% for error in field.errors %}<ul class="errorlist"><li>{{ error }}</li></ul>{% endfor %}
+</div>
